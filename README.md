@@ -12,6 +12,7 @@
 - [Домен](docs/domain.md)
 - [API](docs/api.md)
 - [Roadmap](docs/roadmap.md)
+- [ADR](docs/adr/) — записи об архитектурных решениях
 
 ## Стек
 
