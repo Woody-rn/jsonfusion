@@ -10,8 +10,8 @@
 - [Требования](docs/requirements.md)
 - [Архитектура](docs/architecture.md)
 - [Домен](docs/domain.md)
-- API *(в работе)*
-- Roadmap *(в работе)*
+- [API](docs/api.md)
+- [Roadmap](docs/roadmap.md)
 
 ## Стек
 
