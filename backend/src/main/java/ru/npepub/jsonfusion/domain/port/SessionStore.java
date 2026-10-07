@@ -1,4 +1,4 @@
-package ru.npepub.jsonfusion.port;
+package ru.npepub.jsonfusion.domain.port;
 
 import ru.npepub.jsonfusion.domain.model.MergeSession;
 

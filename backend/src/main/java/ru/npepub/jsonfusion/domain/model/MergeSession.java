@@ -14,8 +14,8 @@ public class MergeSession {
 
     private final String id;
     private SessionStatus status;
-    //private JsonDocument file1;
-    //private JsonDocument file2;
+    private JsonDocument file1;
+    private JsonDocument file2;
     //private MergeConfig config;
     //private MergeResult result;
     //private UnmatchedDecision decision;

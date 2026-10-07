@@ -53,6 +53,9 @@ ru.npepub.jsonfusion
 │   └── GlobalExceptionHandler.java
 │
 ├── domain/
+│   ├── port/
+│   │   ├── SessionStore.java
+│   │   └── JsonParser.java
 │   ├── model/
 │   │   ├── MergeSession.java
 │   │   ├── SessionStatus.java
@@ -84,10 +87,6 @@ ru.npepub.jsonfusion
 │       ├── FieldsAnalyzerService.java
 │       ├── MergeService.java
 │       └── FinalizeService.java
-│
-├── port/
-│   ├── SessionStore.java
-│   └── JsonParser.java
 │
 ├── infrastructure/
 │   ├── session/
