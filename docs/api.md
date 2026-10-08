@@ -43,7 +43,8 @@
 | `GET` | `/api/sessions/{id}/unmatched` | Получить несовпавшие |
 | `PUT` | `/api/sessions/{id}/unmatched/decisions` | Сохранить решения |
 | `POST` | `/api/sessions/{id}/finalize` | Финализировать |
-| `GET` | `/api/sessions/{id}/result` | Скачать результат |
+| `GET` | `/api/sessions/{id}/result` | Скачать основной результат |
+| `GET` | `/api/sessions/{id}/result/unmatched` | Скачать нерешённые (если `saveUnmatched: true`) |
 
 ## Ключевые примеры
 
@@ -88,6 +89,33 @@
 }
 ```
 
+### Получить несовпавшие
+
+`GET /api/sessions/{id}/unmatched` → `200 OK`
+
+```json
+{
+  "unmatchedLeft": [
+    {
+      "id": "L1",
+      "record": { "name": "ООО Ромашка", "status": "active" },
+      "type": "ONLY_IN_LEFT",
+      "label": null,
+      "ignored": false
+    }
+  ],
+  "unmatchedRight": [
+    {
+      "id": "R1",
+      "record": { "name": "О Ромашка 1", "status": "active" },
+      "type": "ONLY_IN_RIGHT",
+      "label": null,
+      "ignored": false
+    }
+  ]
+}
+```
+
 ### Сохранить решения по несовпавшим
 
 `PUT /api/sessions/{id}/unmatched/decisions` → `200 OK`
@@ -101,25 +129,51 @@ Request:
 }
 ```
 
+Response — тот же формат, что `GET /unmatched`, но с обновлёнными `label` и `ignored`.
+
 ### Финализировать
 
 `POST /api/sessions/{id}/finalize` → `200 OK`
+
+Request:
+
+```json
+{
+  "saveUnmatched": true
+}
+```
+
+Response:
 
 ```json
 {
   "sessionId": "550e8400-...",
   "status": "FINALIZED",
   "resultSummary": {
-    "totalRecords": 45,
+    "totalRecords": 41,
     "fromMatched": 35,
     "fromPairs": 1,
-    "fromUnmatchedLeft": 6,
-    "fromUnmatchedRight": 3,
+    "unmatchedSaved": 5,
     "ignoredCount": 1
-  }
+  },
+  "unmatchedResultAvailable": true
 }
 ```
 
-### Скачать результат
+**Пояснения к полям:**
+- `totalRecords` — сколько записей в основном файле.
+- `fromMatched` — из auto-merge.
+- `fromPairs` — из ручных пар.
+- `unmatchedSaved` — сколько нерешённых сохранено в `unmatched.json` (0, если `saveUnmatched: false`).
+- `ignoredCount` — сколько проигнорировано (никуда не идут).
+- `unmatchedResultAvailable` — есть ли второй файл для скачивания.
+
+### Скачать основной результат
 
 `GET /api/sessions/{id}/result` → `200 OK`, `application/json`, файл `merged-result.json`.
+
+### Скачать нерешённые
+
+`GET /api/sessions/{id}/result/unmatched` → `200 OK`, `application/json`, файл `unmatched.json`.
+
+**Возвращает `404`, если** `saveUnmatched` был `false` при финализации.
