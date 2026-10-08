@@ -17,7 +17,7 @@ public class MergeSession {
     private JsonDocument file1;
     private JsonDocument file2;
     private MergeConfig config;
-    //private MergeResult result;
+    private MergeResult result;
     //private UnmatchedDecision decision;
     private final Instant createdAt;
     private Instant lastAccessAt;
