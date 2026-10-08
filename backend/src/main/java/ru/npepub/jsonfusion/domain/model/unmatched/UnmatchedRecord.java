@@ -1,4 +1,6 @@
-package ru.npepub.jsonfusion.domain.model;
+package ru.npepub.jsonfusion.domain.model.unmatched;
+
+import ru.npepub.jsonfusion.domain.model.json.JsonRecord;
 
 /**
  * A record that did not match a counterpart. Immutable; label and ignored

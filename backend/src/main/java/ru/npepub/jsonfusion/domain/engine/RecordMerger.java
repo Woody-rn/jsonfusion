@@ -1,8 +1,8 @@
 package ru.npepub.jsonfusion.domain.engine;
 
 import org.springframework.stereotype.Component;
-import ru.npepub.jsonfusion.domain.model.JsonRecord;
-import ru.npepub.jsonfusion.domain.model.MergeConfig;
+import ru.npepub.jsonfusion.domain.model.json.JsonRecord;
+import ru.npepub.jsonfusion.domain.model.config.MergeConfig;
 
 import java.util.ArrayList;
 import java.util.List;

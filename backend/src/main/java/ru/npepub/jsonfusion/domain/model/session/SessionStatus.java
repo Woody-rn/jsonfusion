@@ -1,4 +1,4 @@
-package ru.npepub.jsonfusion.domain.model;
+package ru.npepub.jsonfusion.domain.model.session;
 
 /**
  * Lifecycle status of a merge session. Determines which operations are allowed.

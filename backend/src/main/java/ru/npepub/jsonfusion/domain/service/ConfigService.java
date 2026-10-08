@@ -7,7 +7,12 @@ import ru.npepub.jsonfusion.api.dto.request.FieldRuleDto;
 import ru.npepub.jsonfusion.api.dto.request.UpdateConfigRequest;
 import ru.npepub.jsonfusion.domain.exception.InvalidSessionStateException;
 import ru.npepub.jsonfusion.domain.exception.ValidationException;
-import ru.npepub.jsonfusion.domain.model.*;
+import ru.npepub.jsonfusion.domain.model.config.ComparisonSettings;
+import ru.npepub.jsonfusion.domain.model.config.FieldRule;
+import ru.npepub.jsonfusion.domain.model.config.MergeConfig;
+import ru.npepub.jsonfusion.domain.model.config.NewField;
+import ru.npepub.jsonfusion.domain.model.session.MergeSession;
+import ru.npepub.jsonfusion.domain.model.session.SessionStatus;
 
 import java.util.List;
 import java.util.Set;

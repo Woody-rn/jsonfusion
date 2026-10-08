@@ -1,4 +1,4 @@
-package ru.npepub.jsonfusion.domain.model;
+package ru.npepub.jsonfusion.domain.model.json;
 
 import java.util.LinkedHashSet;
 import java.util.List;

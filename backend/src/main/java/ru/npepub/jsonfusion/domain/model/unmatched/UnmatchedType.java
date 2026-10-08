@@ -1,4 +1,4 @@
-package ru.npepub.jsonfusion.domain.model;
+package ru.npepub.jsonfusion.domain.model.unmatched;
 
 /**
  * Reason why a record did not match a counterpart in the other document.

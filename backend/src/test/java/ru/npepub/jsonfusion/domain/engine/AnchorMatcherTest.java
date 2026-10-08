@@ -3,9 +3,9 @@ package ru.npepub.jsonfusion.domain.engine;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.TextNode;
 import org.junit.jupiter.api.Test;
-import ru.npepub.jsonfusion.domain.model.ComparisonSettings;
-import ru.npepub.jsonfusion.domain.model.JsonDocument;
-import ru.npepub.jsonfusion.domain.model.JsonRecord;
+import ru.npepub.jsonfusion.domain.model.config.ComparisonSettings;
+import ru.npepub.jsonfusion.domain.model.json.JsonDocument;
+import ru.npepub.jsonfusion.domain.model.json.JsonRecord;
 
 import java.util.LinkedHashMap;
 import java.util.List;

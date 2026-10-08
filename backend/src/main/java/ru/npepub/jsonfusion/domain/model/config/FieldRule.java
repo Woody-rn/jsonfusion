@@ -1,4 +1,4 @@
-package ru.npepub.jsonfusion.domain.model;
+package ru.npepub.jsonfusion.domain.model.config;
 
 /**
  * Rule for a single field during merge.

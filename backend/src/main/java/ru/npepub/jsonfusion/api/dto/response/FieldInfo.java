@@ -1,8 +1,8 @@
 package ru.npepub.jsonfusion.api.dto.response;
 
-import ru.npepub.jsonfusion.domain.model.FieldRole;
-import ru.npepub.jsonfusion.domain.model.FieldRule;
-import ru.npepub.jsonfusion.domain.model.PriorityMode;
+import ru.npepub.jsonfusion.domain.model.config.FieldRole;
+import ru.npepub.jsonfusion.domain.model.config.FieldRule;
+import ru.npepub.jsonfusion.domain.model.config.PriorityMode;
 
 /**
  * Info about a single field in the merge configuration.

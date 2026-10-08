@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.RestController;
 import ru.npepub.jsonfusion.api.dto.request.UpdateConfigRequest;
 import ru.npepub.jsonfusion.api.dto.response.FieldsResponse;
 import ru.npepub.jsonfusion.domain.exception.SessionNotFoundException;
-import ru.npepub.jsonfusion.domain.model.MergeConfig;
-import ru.npepub.jsonfusion.domain.model.MergeSession;
+import ru.npepub.jsonfusion.domain.model.config.MergeConfig;
+import ru.npepub.jsonfusion.domain.model.session.MergeSession;
 import ru.npepub.jsonfusion.domain.service.ConfigService;
 import ru.npepub.jsonfusion.domain.service.SessionService;
 

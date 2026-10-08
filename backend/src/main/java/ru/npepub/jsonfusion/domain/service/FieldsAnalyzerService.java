@@ -2,12 +2,12 @@ package ru.npepub.jsonfusion.domain.service;
 
 import org.springframework.stereotype.Service;
 import ru.npepub.jsonfusion.domain.exception.InvalidSessionStateException;
-import ru.npepub.jsonfusion.domain.model.ComparisonSettings;
-import ru.npepub.jsonfusion.domain.model.FieldRole;
-import ru.npepub.jsonfusion.domain.model.FieldRule;
-import ru.npepub.jsonfusion.domain.model.JsonDocument;
-import ru.npepub.jsonfusion.domain.model.MergeConfig;
-import ru.npepub.jsonfusion.domain.model.PriorityMode;
+import ru.npepub.jsonfusion.domain.model.config.ComparisonSettings;
+import ru.npepub.jsonfusion.domain.model.config.FieldRole;
+import ru.npepub.jsonfusion.domain.model.config.FieldRule;
+import ru.npepub.jsonfusion.domain.model.json.JsonDocument;
+import ru.npepub.jsonfusion.domain.model.config.MergeConfig;
+import ru.npepub.jsonfusion.domain.model.config.PriorityMode;
 
 import java.util.ArrayList;
 import java.util.LinkedHashSet;

@@ -1,6 +1,6 @@
 package ru.npepub.jsonfusion.domain.port;
 
-import ru.npepub.jsonfusion.domain.model.MergeSession;
+import ru.npepub.jsonfusion.domain.model.session.MergeSession;
 
 import java.util.Optional;
 

@@ -1,7 +1,7 @@
 package ru.npepub.jsonfusion.api.dto;
 
-import ru.npepub.jsonfusion.domain.model.ComparisonSettings;
-import ru.npepub.jsonfusion.domain.model.MergeConfig;
+import ru.npepub.jsonfusion.domain.model.config.ComparisonSettings;
+import ru.npepub.jsonfusion.domain.model.config.MergeConfig;
 
 /**
  * Anchor field and comparison settings.

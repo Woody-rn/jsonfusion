@@ -1,4 +1,7 @@
-package ru.npepub.jsonfusion.domain.model;
+package ru.npepub.jsonfusion.domain.model.result;
+
+import ru.npepub.jsonfusion.domain.model.unmatched.UnmatchedRecord;
+import ru.npepub.jsonfusion.domain.model.json.JsonRecord;
 
 import java.util.List;
 

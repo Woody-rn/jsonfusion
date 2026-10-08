@@ -1,13 +1,13 @@
 package ru.npepub.jsonfusion.domain.engine;
 
 import org.springframework.stereotype.Component;
-import ru.npepub.jsonfusion.domain.model.ComparisonSettings;
-import ru.npepub.jsonfusion.domain.model.JsonDocument;
-import ru.npepub.jsonfusion.domain.model.JsonRecord;
-import ru.npepub.jsonfusion.domain.model.MergeConfig;
-import ru.npepub.jsonfusion.domain.model.MergeResult;
-import ru.npepub.jsonfusion.domain.model.UnmatchedRecord;
-import ru.npepub.jsonfusion.domain.model.UnmatchedType;
+import ru.npepub.jsonfusion.domain.model.config.ComparisonSettings;
+import ru.npepub.jsonfusion.domain.model.json.JsonDocument;
+import ru.npepub.jsonfusion.domain.model.json.JsonRecord;
+import ru.npepub.jsonfusion.domain.model.config.MergeConfig;
+import ru.npepub.jsonfusion.domain.model.result.MergeResult;
+import ru.npepub.jsonfusion.domain.model.unmatched.UnmatchedRecord;
+import ru.npepub.jsonfusion.domain.model.unmatched.UnmatchedType;
 
 import java.util.ArrayList;
 import java.util.List;

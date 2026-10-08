@@ -2,9 +2,9 @@ package ru.npepub.jsonfusion.api.dto.request;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import ru.npepub.jsonfusion.domain.model.FieldRole;
-import ru.npepub.jsonfusion.domain.model.FieldRule;
-import ru.npepub.jsonfusion.domain.model.PriorityMode;
+import ru.npepub.jsonfusion.domain.model.config.FieldRole;
+import ru.npepub.jsonfusion.domain.model.config.FieldRule;
+import ru.npepub.jsonfusion.domain.model.config.PriorityMode;
 
 /**
  * A single field rule in the config update request.

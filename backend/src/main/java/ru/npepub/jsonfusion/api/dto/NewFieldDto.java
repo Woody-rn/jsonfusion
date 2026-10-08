@@ -1,7 +1,7 @@
 package ru.npepub.jsonfusion.api.dto;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import ru.npepub.jsonfusion.domain.model.NewField;
+import ru.npepub.jsonfusion.domain.model.config.NewField;
 
 /**
  * A field to add to every result record.

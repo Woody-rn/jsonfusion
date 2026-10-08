@@ -4,8 +4,8 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Component;
 import ru.npepub.jsonfusion.domain.exception.InvalidJsonException;
-import ru.npepub.jsonfusion.domain.model.JsonDocument;
-import ru.npepub.jsonfusion.domain.model.JsonRecord;
+import ru.npepub.jsonfusion.domain.model.json.JsonDocument;
+import ru.npepub.jsonfusion.domain.model.json.JsonRecord;
 import ru.npepub.jsonfusion.domain.port.JsonParser;
 
 import java.io.IOException;

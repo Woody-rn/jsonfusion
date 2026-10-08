@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import ru.npepub.jsonfusion.api.dto.response.UploadFilesResponse;
 import ru.npepub.jsonfusion.domain.exception.SessionNotFoundException;
-import ru.npepub.jsonfusion.domain.model.MergeSession;
+import ru.npepub.jsonfusion.domain.model.session.MergeSession;
 import ru.npepub.jsonfusion.domain.service.FileService;
 import ru.npepub.jsonfusion.domain.service.SessionService;
 

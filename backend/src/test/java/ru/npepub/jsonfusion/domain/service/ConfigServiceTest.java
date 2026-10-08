@@ -8,10 +8,10 @@ import ru.npepub.jsonfusion.api.dto.request.FieldRuleDto;
 import ru.npepub.jsonfusion.api.dto.request.UpdateConfigRequest;
 import ru.npepub.jsonfusion.domain.exception.InvalidSessionStateException;
 import ru.npepub.jsonfusion.domain.exception.ValidationException;
-import ru.npepub.jsonfusion.domain.model.FieldRole;
-import ru.npepub.jsonfusion.domain.model.MergeSession;
-import ru.npepub.jsonfusion.domain.model.PriorityMode;
-import ru.npepub.jsonfusion.domain.model.SessionStatus;
+import ru.npepub.jsonfusion.domain.model.config.FieldRole;
+import ru.npepub.jsonfusion.domain.model.session.MergeSession;
+import ru.npepub.jsonfusion.domain.model.config.PriorityMode;
+import ru.npepub.jsonfusion.domain.model.session.SessionStatus;
 
 import java.time.Instant;
 import java.util.List;

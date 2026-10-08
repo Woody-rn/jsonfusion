@@ -2,7 +2,7 @@ package ru.npepub.jsonfusion.domain.engine;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import org.springframework.stereotype.Component;
-import ru.npepub.jsonfusion.domain.model.ComparisonSettings;
+import ru.npepub.jsonfusion.domain.model.config.ComparisonSettings;
 
 import java.util.regex.Pattern;
 

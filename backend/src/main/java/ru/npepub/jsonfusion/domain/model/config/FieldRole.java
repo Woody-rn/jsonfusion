@@ -1,4 +1,4 @@
-package ru.npepub.jsonfusion.domain.model;
+package ru.npepub.jsonfusion.domain.model.config;
 
 /**
  * Role of a field during merge. Exactly one field per session has ANCHOR role.

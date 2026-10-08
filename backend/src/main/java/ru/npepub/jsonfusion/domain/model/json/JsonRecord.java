@@ -1,4 +1,4 @@
-package ru.npepub.jsonfusion.domain.model;
+package ru.npepub.jsonfusion.domain.model.json;
 
 import com.fasterxml.jackson.databind.JsonNode;
 

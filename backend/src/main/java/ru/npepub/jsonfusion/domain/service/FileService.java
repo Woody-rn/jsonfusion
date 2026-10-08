@@ -2,9 +2,9 @@ package ru.npepub.jsonfusion.domain.service;
 
 import org.springframework.stereotype.Service;
 import ru.npepub.jsonfusion.domain.exception.InvalidSessionStateException;
-import ru.npepub.jsonfusion.domain.model.JsonDocument;
-import ru.npepub.jsonfusion.domain.model.MergeSession;
-import ru.npepub.jsonfusion.domain.model.SessionStatus;
+import ru.npepub.jsonfusion.domain.model.json.JsonDocument;
+import ru.npepub.jsonfusion.domain.model.session.MergeSession;
+import ru.npepub.jsonfusion.domain.model.session.SessionStatus;
 import ru.npepub.jsonfusion.domain.port.JsonParser;
 
 import java.io.InputStream;

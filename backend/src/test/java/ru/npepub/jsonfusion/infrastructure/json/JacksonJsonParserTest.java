@@ -3,7 +3,7 @@ package ru.npepub.jsonfusion.infrastructure.json;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import ru.npepub.jsonfusion.domain.exception.InvalidJsonException;
-import ru.npepub.jsonfusion.domain.model.JsonDocument;
+import ru.npepub.jsonfusion.domain.model.json.JsonDocument;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;

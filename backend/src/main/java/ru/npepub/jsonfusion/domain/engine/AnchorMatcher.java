@@ -1,9 +1,9 @@
 package ru.npepub.jsonfusion.domain.engine;
 
 import org.springframework.stereotype.Component;
-import ru.npepub.jsonfusion.domain.model.ComparisonSettings;
-import ru.npepub.jsonfusion.domain.model.JsonDocument;
-import ru.npepub.jsonfusion.domain.model.JsonRecord;
+import ru.npepub.jsonfusion.domain.model.config.ComparisonSettings;
+import ru.npepub.jsonfusion.domain.model.json.JsonDocument;
+import ru.npepub.jsonfusion.domain.model.json.JsonRecord;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;

@@ -1,8 +1,8 @@
 package ru.npepub.jsonfusion.domain.service;
 
 import org.springframework.stereotype.Service;
-import ru.npepub.jsonfusion.domain.model.MergeSession;
-import ru.npepub.jsonfusion.domain.model.SessionStatus;
+import ru.npepub.jsonfusion.domain.model.session.MergeSession;
+import ru.npepub.jsonfusion.domain.model.session.SessionStatus;
 import ru.npepub.jsonfusion.domain.port.SessionStore;
 
 import java.util.Optional;

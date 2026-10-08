@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.npepub.jsonfusion.api.dto.response.SessionResponse;
 import ru.npepub.jsonfusion.domain.exception.SessionNotFoundException;
-import ru.npepub.jsonfusion.domain.model.MergeSession;
+import ru.npepub.jsonfusion.domain.model.session.MergeSession;
 import ru.npepub.jsonfusion.domain.service.SessionService;
 
 /**

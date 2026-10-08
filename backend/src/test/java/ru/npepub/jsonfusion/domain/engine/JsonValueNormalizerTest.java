@@ -2,7 +2,7 @@ package ru.npepub.jsonfusion.domain.engine;
 
 import com.fasterxml.jackson.databind.node.*;
 import org.junit.jupiter.api.Test;
-import ru.npepub.jsonfusion.domain.model.ComparisonSettings;
+import ru.npepub.jsonfusion.domain.model.config.ComparisonSettings;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

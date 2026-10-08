@@ -3,7 +3,11 @@ package ru.npepub.jsonfusion.domain.engine;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.TextNode;
 import org.junit.jupiter.api.Test;
-import ru.npepub.jsonfusion.domain.model.*;
+import ru.npepub.jsonfusion.domain.model.config.*;
+import ru.npepub.jsonfusion.domain.model.json.JsonDocument;
+import ru.npepub.jsonfusion.domain.model.json.JsonRecord;
+import ru.npepub.jsonfusion.domain.model.result.MergeResult;
+import ru.npepub.jsonfusion.domain.model.unmatched.UnmatchedType;
 
 import java.util.LinkedHashMap;
 import java.util.List;

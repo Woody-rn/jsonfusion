@@ -1,6 +1,6 @@
 package ru.npepub.jsonfusion.domain.port;
 
-import ru.npepub.jsonfusion.domain.model.JsonDocument;
+import ru.npepub.jsonfusion.domain.model.json.JsonDocument;
 
 import java.io.InputStream;
 

@@ -1,4 +1,4 @@
-package ru.npepub.jsonfusion.domain.model;
+package ru.npepub.jsonfusion.domain.model.config;
 
 /**
  * When a priority field should overwrite the other side's value.

@@ -1,6 +1,6 @@
 package ru.npepub.jsonfusion.api.dto.response;
 
-import ru.npepub.jsonfusion.domain.model.MergeSession;
+import ru.npepub.jsonfusion.domain.model.session.MergeSession;
 
 /**
  * Response for POST /api/sessions/{id}/files.

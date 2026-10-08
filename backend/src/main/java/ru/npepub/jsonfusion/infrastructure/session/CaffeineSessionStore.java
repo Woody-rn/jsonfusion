@@ -3,7 +3,7 @@ package ru.npepub.jsonfusion.infrastructure.session;
 import com.github.benmanes.caffeine.cache.Cache;
 import com.github.benmanes.caffeine.cache.Caffeine;
 import org.springframework.stereotype.Component;
-import ru.npepub.jsonfusion.domain.model.MergeSession;
+import ru.npepub.jsonfusion.domain.model.session.MergeSession;
 import ru.npepub.jsonfusion.domain.port.SessionStore;
 
 import java.time.Duration;

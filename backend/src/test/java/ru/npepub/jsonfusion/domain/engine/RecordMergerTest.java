@@ -3,12 +3,12 @@ package ru.npepub.jsonfusion.domain.engine;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.TextNode;
 import org.junit.jupiter.api.Test;
-import ru.npepub.jsonfusion.domain.model.ComparisonSettings;
-import ru.npepub.jsonfusion.domain.model.FieldRole;
-import ru.npepub.jsonfusion.domain.model.FieldRule;
-import ru.npepub.jsonfusion.domain.model.JsonRecord;
-import ru.npepub.jsonfusion.domain.model.MergeConfig;
-import ru.npepub.jsonfusion.domain.model.PriorityMode;
+import ru.npepub.jsonfusion.domain.model.config.ComparisonSettings;
+import ru.npepub.jsonfusion.domain.model.config.FieldRole;
+import ru.npepub.jsonfusion.domain.model.config.FieldRule;
+import ru.npepub.jsonfusion.domain.model.json.JsonRecord;
+import ru.npepub.jsonfusion.domain.model.config.MergeConfig;
+import ru.npepub.jsonfusion.domain.model.config.PriorityMode;
 
 import java.util.LinkedHashMap;
 import java.util.List;

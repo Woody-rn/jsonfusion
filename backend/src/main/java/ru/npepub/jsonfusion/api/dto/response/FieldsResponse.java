@@ -2,10 +2,10 @@ package ru.npepub.jsonfusion.api.dto.response;
 
 import ru.npepub.jsonfusion.api.dto.AnchorSettingsDto;
 import ru.npepub.jsonfusion.api.dto.NewFieldDto;
-import ru.npepub.jsonfusion.domain.model.FieldRole;
-import ru.npepub.jsonfusion.domain.model.FieldRule;
-import ru.npepub.jsonfusion.domain.model.JsonDocument;
-import ru.npepub.jsonfusion.domain.model.MergeConfig;
+import ru.npepub.jsonfusion.domain.model.config.FieldRole;
+import ru.npepub.jsonfusion.domain.model.config.FieldRule;
+import ru.npepub.jsonfusion.domain.model.json.JsonDocument;
+import ru.npepub.jsonfusion.domain.model.config.MergeConfig;
 
 import java.util.List;
 import java.util.Set;

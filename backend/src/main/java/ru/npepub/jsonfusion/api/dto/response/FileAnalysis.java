@@ -1,6 +1,6 @@
 package ru.npepub.jsonfusion.api.dto.response;
 
-import ru.npepub.jsonfusion.domain.model.JsonDocument;
+import ru.npepub.jsonfusion.domain.model.json.JsonDocument;
 
 import java.util.List;
 
