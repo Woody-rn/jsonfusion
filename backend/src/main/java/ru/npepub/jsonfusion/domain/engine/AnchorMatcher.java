@@ -66,7 +66,7 @@ public class AnchorMatcher {
 
         byKey.forEach((key, records) -> {
             if (records.size() == 1) {
-                unique.put(key, records.get(0));
+                unique.put(key, records.getFirst());
             } else {
                 duplicates.put(key, records);
             }
