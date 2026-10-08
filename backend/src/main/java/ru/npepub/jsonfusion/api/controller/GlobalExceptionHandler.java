@@ -2,6 +2,7 @@ package ru.npepub.jsonfusion.api.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.multipart.MaxUploadSizeExceededException;
@@ -9,6 +10,9 @@ import ru.npepub.jsonfusion.api.dto.response.ErrorResponse;
 import ru.npepub.jsonfusion.domain.exception.InvalidJsonException;
 import ru.npepub.jsonfusion.domain.exception.InvalidSessionStateException;
 import ru.npepub.jsonfusion.domain.exception.SessionNotFoundException;
+import ru.npepub.jsonfusion.domain.exception.ValidationException;
+
+import java.util.stream.Collectors;
 
 /**
  * Translates domain exceptions into HTTP responses.
@@ -34,6 +38,19 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(MaxUploadSizeExceededException.class)
     public ResponseEntity<ErrorResponse> handleMaxUploadSize(MaxUploadSizeExceededException ex) {
         return build(HttpStatus.PAYLOAD_TOO_LARGE, "FILE_TOO_LARGE", "File exceeds the maximum allowed size");
+    }
+
+    @ExceptionHandler(ValidationException.class)
+    public ResponseEntity<ErrorResponse> handleValidation(ValidationException ex) {
+        return build(HttpStatus.BAD_REQUEST, "VALIDATION_ERROR", ex.getMessage());
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<ErrorResponse> handleValidation(MethodArgumentNotValidException ex) {
+        String message = ex.getBindingResult().getFieldErrors().stream()
+                .map(e -> e.getField() + ": " + e.getDefaultMessage())
+                .collect(Collectors.joining("; "));
+        return build(HttpStatus.BAD_REQUEST, "VALIDATION_ERROR", message);
     }
 
     private ResponseEntity<ErrorResponse> build(HttpStatus status, String code, String message) {
