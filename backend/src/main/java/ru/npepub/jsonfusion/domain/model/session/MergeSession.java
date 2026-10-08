@@ -5,6 +5,7 @@ import lombok.Setter;
 import ru.npepub.jsonfusion.domain.model.json.JsonDocument;
 import ru.npepub.jsonfusion.domain.model.config.MergeConfig;
 import ru.npepub.jsonfusion.domain.model.result.MergeResult;
+import ru.npepub.jsonfusion.domain.model.unmatched.UnmatchedDecision;
 
 import java.time.Instant;
 
@@ -21,7 +22,7 @@ public class MergeSession {
     private JsonDocument file2;
     private MergeConfig config;
     private MergeResult result;
-    //private UnmatchedDecision decision;
+    private UnmatchedDecision decision;
     private final Instant createdAt;
     private Instant lastAccessAt;
 
