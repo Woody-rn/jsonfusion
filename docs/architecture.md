@@ -12,7 +12,7 @@
 ┌──────────────────────▼──────────────────────────────────────┐
 │                       BACKEND (Spring Boot)                 │
 │                                                             │
-│  api → domain(service → engine → model) → port → infra      │
+│  api → domain(service → engine → model, port) → infra       │
 │                                                             │
 │  SessionStore (Caffeine) — состояние сессий                 │
 │  Jackson — парсинг JSON                                     │
@@ -23,10 +23,9 @@
 
 ```
 api/            — вход (REST): контроллеры, DTO, обработка ошибок
-domain/         — ядро: model, engine, service
-port/           — интерфейсы к внешнему миру
+domain/         — ядро: model, engine, service, port, exception
 infrastructure/ — реализации port'ов (Caffeine, Jackson)
-config/         — Spring-конфигурация
+config/         — Spring-конфигурация (пока пусто)
 ```
 
 **Принцип:** домен **не знает** про инфраструктуру. Домен говорит «мне нужен
@@ -46,58 +45,88 @@ ru.npepub.jsonfusion
 │   │   ├── ConfigController.java
 │   │   ├── MergeController.java
 │   │   ├── UnmatchedController.java
-│   │   └── ResultController.java
-│   ├── dto/
-│   │   ├── request/
-│   │   └── response/
-│   └── GlobalExceptionHandler.java
+│   │   ├── FinalizeController.java
+│   │   └── GlobalExceptionHandler.java
+│   └── dto/
+│       ├── AnchorSettingsDto.java
+│       ├── NewFieldDto.java
+│       ├── request/
+│       │   ├── UpdateConfigRequest.java
+│       │   ├── FieldRuleDto.java
+│       │   ├── UpdateUnmatchedRequest.java
+│       │   ├── UnmatchedPairDto.java
+│       │   └── FinalizeRequest.java
+│       └── response/
+│           ├── SessionResponse.java
+│           ├── ErrorResponse.java
+│           ├── UploadFilesResponse.java
+│           ├── FileAnalysis.java
+│           ├── FieldsResponse.java
+│           ├── FieldInfo.java
+│           ├── MergeResponse.java
+│           ├── MergeSummary.java
+│           ├── UnmatchedResponse.java
+│           ├── UnmatchedRecordDto.java
+│           ├── FinalizeResponse.java
+│           └── ResultSummary.java
 │
 ├── domain/
-│   ├── port/
-│   │   ├── SessionStore.java
-│   │   └── JsonParser.java
 │   ├── model/
-│   │   ├── MergeSession.java
-│   │   ├── SessionStatus.java
-│   │   ├── JsonDocument.java
-│   │   ├── JsonRecord.java
-│   │   ├── MergeConfig.java
-│   │   ├── FieldRule.java
-│   │   ├── FieldRole.java
-│   │   ├── PriorityMode.java
-│   │   ├── ComparisonSettings.java
-│   │   ├── MergeResult.java
-│   │   ├── UnmatchedRecord.java
-│   │   ├── UnmatchedType.java
-│   │   ├── UnmatchedPair.java
-│   │   ├── UnmatchedDecision.java
-│   │   └── NewField.java
+│   │   ├── session/
+│   │   │   ├── MergeSession.java
+│   │   │   └── SessionStatus.java
+│   │   ├── json/
+│   │   │   ├── JsonDocument.java
+│   │   │   └── JsonRecord.java
+│   │   ├── config/
+│   │   │   ├── MergeConfig.java
+│   │   │   ├── FieldRule.java
+│   │   │   ├── FieldRole.java
+│   │   │   ├── PriorityMode.java
+│   │   │   ├── ComparisonSettings.java
+│   │   │   └── NewField.java
+│   │   ├── result/
+│   │   │   ├── MergeResult.java
+│   │   │   └── Finalization.java
+│   │   └── unmatched/
+│   │       ├── UnmatchedRecord.java
+│   │       ├── UnmatchedType.java
+│   │       ├── UnmatchedPair.java
+│   │       └── UnmatchedDecision.java
 │   │
 │   ├── engine/
 │   │   ├── MergeEngine.java
 │   │   ├── AnchorMatcher.java
 │   │   ├── FieldMerger.java
 │   │   ├── RecordMerger.java
-│   │   ├── JsonValueNormalizer.java
-│   │   └── UnmatchedResolver.java
+│   │   └── JsonValueNormalizer.java
 │   │
-│   └── service/
-│       ├── SessionService.java
-│       ├── FileService.java
-│       ├── FieldsAnalyzerService.java
-│       ├── MergeService.java
-│       └── FinalizeService.java
+│   ├── service/
+│   │   ├── SessionService.java
+│   │   ├── FileService.java
+│   │   ├── FieldsAnalyzerService.java
+│   │   ├── ConfigService.java
+│   │   ├── MergeService.java
+│   │   ├── UnmatchedService.java
+│   │   ├── FinalizeService.java
+│   │   └── FinalizeOutcome.java
+│   │
+│   ├── port/
+│   │   ├── SessionStore.java
+│   │   └── JsonParser.java
+│   │
+│   └── exception/
+│       ├── SessionNotFoundException.java
+│       ├── InvalidSessionStateException.java
+│       ├── InvalidJsonException.java
+│       ├── ValidationException.java
+│       └── UnmatchedResultNotFoundException.java
 │
-├── infrastructure/
-│   ├── session/
-│   │   └── CaffeineSessionStore.java
-│   └── json/
-│       └── JacksonJsonParser.java
-│
-└── config/
-    ├── JacksonConfig.java
-    ├── CaffeineConfig.java
-    └── WebConfig.java
+└── infrastructure/
+    ├── session/
+    │   └── CaffeineSessionStore.java
+    └── json/
+        └── JacksonJsonParser.java
 ```
 
 ## 4. Принципы (SOLID)
@@ -121,6 +150,7 @@ ru.npepub.jsonfusion
 - `config` (MergeConfig),
 - `result` (MergeResult),
 - `decision` (UnmatchedDecision),
+- `finalization` (Finalization),
 - `createdAt`, `lastAccessAt`.
 
 ### 5.2. MergeEngine
@@ -133,8 +163,8 @@ ru.npepub.jsonfusion
 **Логика:**
 1. Сгруппировать записи F1 и F2 по нормализованному якорю.
 2. Для каждого ключа:
-    - ровно 1 в F1 и ровно 1 в F2 → matched.
-    - иначе → все в unmatched (тип DUPLICATE или ONLY_IN_*).
+   - ровно 1 в F1 и ровно 1 в F2 → matched.
+   - иначе → все в unmatched (тип DUPLICATE или ONLY_IN_*).
 3. Для matched — применить FieldMerger (роли, условия).
 4. Вернуть результат.
 
@@ -147,7 +177,7 @@ ru.npepub.jsonfusion
 ```java
 public interface SessionStore {
     MergeSession create();
-    Optional<MergeSession> get(String id);
+    Optional<MergeSession> findById(String id);
     void save(MergeSession session);
     void delete(String id);
 }
@@ -201,25 +231,40 @@ src/
 ## 7. Поток данных
 
 ```
-1. Фронт: POST /api/sessions              → sessionId
-2. Фронт: POST /api/sessions/{id}/files   → анализ полей
-3. Фронт: GET  /api/sessions/{id}/fields  → показать поля
-4. Фронт: PUT  /api/sessions/{id}/config  → сохранить роли
-5. Фронт: POST /api/sessions/{id}/merge   → результат + несовпавшие
-6. Фронт: GET  /api/sessions/{id}/unmatched
-7. Фронт: PUT  /api/sessions/{id}/unmatched/decisions
-8. Фронт: POST /api/sessions/{id}/finalize
-9. Фронт: GET  /api/sessions/{id}/result  → скачать
+1.  Фронт: POST /api/sessions                       → sessionId
+2.  Фронт: POST /api/sessions/{id}/files            → анализ полей
+3.  Фронт: GET  /api/sessions/{id}/fields           → показать поля
+4.  Фронт: PUT  /api/sessions/{id}/config           → сохранить роли
+5.  Фронт: POST /api/sessions/{id}/merge            → результат + несовпавшие
+6.  Фронт: GET  /api/sessions/{id}/unmatched
+7.  Фронт: PUT  /api/sessions/{id}/unmatched/decisions
+8.  Фронт: POST /api/sessions/{id}/finalize         → финал
+9.  Фронт: GET  /api/sessions/{id}/result           → скачать основной
+10. Фронт: GET  /api/sessions/{id}/result/unmatched → скачать нерешённые (опц.)
 ```
 
 ## 8. Нефункциональные решения
 
 | Аспект | Решение |
 |--------|---------|
-| Сессии | Caffeine in-memory, TTL 15–30 мин, max 2 ч, лимит 100 |
+| Сессии | Caffeine in-memory, TTL 15 мин (idle), max 2 ч, лимит 100 |
 | Сессия на вкладку | `sessionStorage` |
 | Авторизация | нет |
 | Инстанс | один |
 | Формат | массив плоских JSON-объектов |
 | Лимит файла | 5 МБ |
 | CORS | разрешён для dev (`localhost:5173`) |
+
+## 9. Code conventions
+
+### Javadoc
+- Язык — английский.
+- Класс — короткое описание (зачем, не что).
+- Метод — только если сложный или это интерфейс.
+- Не пишем на: геттеры, сеттеры, простые методы, значения enum.
+
+### Именование
+- Классы — `PascalCase`.
+- Методы, поля — `camelCase`.
+- Константы — `UPPER_SNAKE_CASE`.
+- Пакеты — `lowercase`.

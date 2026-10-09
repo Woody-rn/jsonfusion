@@ -7,10 +7,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.multipart.MaxUploadSizeExceededException;
 import ru.npepub.jsonfusion.api.dto.response.ErrorResponse;
-import ru.npepub.jsonfusion.domain.exception.InvalidJsonException;
-import ru.npepub.jsonfusion.domain.exception.InvalidSessionStateException;
-import ru.npepub.jsonfusion.domain.exception.SessionNotFoundException;
-import ru.npepub.jsonfusion.domain.exception.ValidationException;
+import ru.npepub.jsonfusion.domain.exception.*;
 
 import java.util.stream.Collectors;
 
@@ -51,6 +48,11 @@ public class GlobalExceptionHandler {
                 .map(e -> e.getField() + ": " + e.getDefaultMessage())
                 .collect(Collectors.joining("; "));
         return build(HttpStatus.BAD_REQUEST, "VALIDATION_ERROR", message);
+    }
+
+    @ExceptionHandler(UnmatchedResultNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleUnmatchedResultNotFound(UnmatchedResultNotFoundException ex) {
+        return build(HttpStatus.NOT_FOUND, "UNMATCHED_RESULT_NOT_FOUND", ex.getMessage());
     }
 
     private ResponseEntity<ErrorResponse> build(HttpStatus status, String code, String message) {

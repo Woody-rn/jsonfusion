@@ -23,6 +23,7 @@
 | Код | HTTP | Смысл |
 |-----|------|-------|
 | `SESSION_NOT_FOUND` | 404 | Сессия не найдена |
+| `UNMATCHED_RESULT_NOT_FOUND` | 404 | Файл нерешённых недоступен |
 | `INVALID_SESSION_STATE` | 409 | Операция недопустима в текущем статусе |
 | `FILE_TOO_LARGE` | 413 | Файл больше 5 МБ |
 | `INVALID_JSON` | 400 | Файл не парсится |
@@ -44,7 +45,7 @@
 | `PUT` | `/api/sessions/{id}/unmatched/decisions` | Сохранить решения |
 | `POST` | `/api/sessions/{id}/finalize` | Финализировать |
 | `GET` | `/api/sessions/{id}/result` | Скачать основной результат |
-| `GET` | `/api/sessions/{id}/result/unmatched` | Скачать нерешённые (если `saveUnmatched: true`) |
+| `GET` | `/api/sessions/{id}/result/unmatched` | Скачать нерешённые (опционально) |
 
 ## Ключевые примеры
 
@@ -170,10 +171,27 @@ Response:
 
 ### Скачать основной результат
 
-`GET /api/sessions/{id}/result` → `200 OK`, `application/json`, файл `merged-result.json`.
+`GET /api/sessions/{id}/result` → `200 OK`, `application/json`
+
+**Заголовки:**
+- `Content-Disposition: attachment; filename="merged-result.json"`
+
+**Тело:** JSON-массив объектов (итоговый результат).
+
+**Ошибки:**
+- `404` — сессия не найдена.
+- `409` — сессия не в статусе `FINALIZED`.
 
 ### Скачать нерешённые
 
-`GET /api/sessions/{id}/result/unmatched` → `200 OK`, `application/json`, файл `unmatched.json`.
+`GET /api/sessions/{id}/result/unmatched` → `200 OK`, `application/json`
 
-**Возвращает `404`, если** `saveUnmatched` был `false` при финализации.
+**Заголовки:**
+- `Content-Disposition: attachment; filename="unmatched.json"`
+
+**Тело:** JSON-массив объектов (нерешённые несовпавшие).
+
+**Ошибки:**
+- `404 SESSION_NOT_FOUND` — сессия не найдена.
+- `404 UNMATCHED_RESULT_NOT_FOUND` — файл не создавался (`saveUnmatched: false` или нерешённых не было).
+- `409 INVALID_SESSION_STATE` — сессия не в статусе `FINALIZED`.

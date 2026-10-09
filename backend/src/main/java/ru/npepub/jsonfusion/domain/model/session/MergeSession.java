@@ -2,8 +2,9 @@ package ru.npepub.jsonfusion.domain.model.session;
 
 import lombok.Getter;
 import lombok.Setter;
-import ru.npepub.jsonfusion.domain.model.json.JsonDocument;
 import ru.npepub.jsonfusion.domain.model.config.MergeConfig;
+import ru.npepub.jsonfusion.domain.model.json.JsonDocument;
+import ru.npepub.jsonfusion.domain.model.result.Finalization;
 import ru.npepub.jsonfusion.domain.model.result.MergeResult;
 import ru.npepub.jsonfusion.domain.model.unmatched.UnmatchedDecision;
 
@@ -23,6 +24,7 @@ public class MergeSession {
     private MergeConfig config;
     private MergeResult result;
     private UnmatchedDecision decision;
+    private Finalization finalization;
     private final Instant createdAt;
     private Instant lastAccessAt;
 
