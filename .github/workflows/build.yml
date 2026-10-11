@@ -7,8 +7,6 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_PREFIX: ${{ github.repository_owner }}/jsonfusion
-  OWNER_LC: ${{ github.repository_owner }}
 
 jobs:
   build:
@@ -19,6 +17,10 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+
+      - name: Set lowercase owner
+        id: owner
+        run: echo "lc=$(echo '${{ github.repository_owner }}' | tr '[:upper:]' '[:lower:]')" >> $GITHUB_OUTPUT
 
       - name: Log in to GHCR
         uses: docker/login-action@v3
@@ -33,8 +35,8 @@ jobs:
           context: ./backend
           push: true
           tags: |
-            ${{ env.REGISTRY }}/${{ env.IMAGE_PREFIX }}-backend:latest
-            ${{ env.REGISTRY }}/${{ env.IMAGE_PREFIX }}-backend:${{ github.sha }}
+            ${{ env.REGISTRY }}/${{ steps.owner.outputs.lc }}/jsonfusion-backend:latest
+            ${{ env.REGISTRY }}/${{ steps.owner.outputs.lc }}/jsonfusion-backend:${{ github.sha }}
 
       - name: Build and push frontend
         uses: docker/build-push-action@v6
@@ -44,5 +46,5 @@ jobs:
           build-args: |
             VITE_API_URL=/api
           tags: |
-            ${{ env.REGISTRY }}/${{ env.IMAGE_PREFIX }}-frontend:latest
-            ${{ env.REGISTRY }}/${{ env.IMAGE_PREFIX }}-frontend:${{ github.sha }}
+            ${{ env.REGISTRY }}/${{ steps.owner.outputs.lc }}/jsonfusion-frontend:latest
+            ${{ env.REGISTRY }}/${{ steps.owner.outputs.lc }}/jsonfusion-frontend:${{ github.sha }}
