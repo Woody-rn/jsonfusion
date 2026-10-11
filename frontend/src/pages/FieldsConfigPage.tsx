@@ -2,6 +2,7 @@ import { Box, Button, Flex, Heading, Spinner, Text, VStack } from "@chakra-ui/re
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getFields, updateConfig } from "../api/config";
+import { runMerge } from "../api/merge";
 import type { UpdateConfigRequest } from "../api/types";
 import AnchorSettingsPanel from "../components/fields/AnchorSettingsPanel";
 import FieldsTable from "../components/fields/FieldsTable";
@@ -64,6 +65,7 @@ export default function FieldsConfigPage() {
 
             const response = await updateConfig(sessionId, request);
             setData(response.fields, response.anchorSettings, response.newFields);
+            await runMerge(sessionId);
             navigate("/unmatched");
         } catch (e) {
             setError(e instanceof Error ? e.message : "Save failed");

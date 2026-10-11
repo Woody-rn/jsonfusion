@@ -21,6 +21,7 @@ interface UnmatchedStore {
         ignored: Set<string>
     ) => void;
     toggleIgnored: (id: string) => void;
+    ignoreMany: (ids: string[]) => void;
     ignoreAll: () => void;
     clearIgnored: () => void;
     pairRecords: (leftId: string, rightId: string, label: string) => void;
@@ -50,6 +51,13 @@ export const useUnmatchedStore = create<UnmatchedStore>((set) => ({
             const next = new Set(state.ignoredIds);
             if (next.has(id)) next.delete(id);
             else next.add(id);
+            return { ignoredIds: next };
+        }),
+
+    ignoreMany: (ids) =>
+        set((state) => {
+            const next = new Set(state.ignoredIds);
+            ids.forEach((id) => next.add(id));
             return { ignoredIds: next };
         }),
 
