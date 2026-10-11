@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import type { UnmatchedRecordDto } from "../api/types";
+import type { MergeSummary, UnmatchedRecordDto } from "../api/types";
 
 export interface UnmatchedPairState {
     leftId: string;
@@ -12,6 +12,7 @@ interface UnmatchedStore {
     unmatchedRight: UnmatchedRecordDto[];
     pairs: UnmatchedPairState[];
     ignoredIds: Set<string>;
+    mergeSummary: MergeSummary | null;
     loaded: boolean;
 
     setData: (
@@ -20,6 +21,7 @@ interface UnmatchedStore {
         pairs: UnmatchedPairState[],
         ignored: Set<string>
     ) => void;
+    setMergeSummary: (summary: MergeSummary) => void;
     toggleIgnored: (id: string) => void;
     ignoreMany: (ids: string[]) => void;
     ignoreAll: () => void;
@@ -35,6 +37,7 @@ export const useUnmatchedStore = create<UnmatchedStore>((set) => ({
     unmatchedRight: [],
     pairs: [],
     ignoredIds: new Set(),
+    mergeSummary: null,
     loaded: false,
 
     setData: (left, right, pairs, ignored) =>
@@ -45,6 +48,8 @@ export const useUnmatchedStore = create<UnmatchedStore>((set) => ({
             ignoredIds: new Set(ignored),
             loaded: true,
         }),
+
+    setMergeSummary: (mergeSummary) => set({ mergeSummary }),
 
     toggleIgnored: (id) =>
         set((state) => {
@@ -99,6 +104,7 @@ export const useUnmatchedStore = create<UnmatchedStore>((set) => ({
             unmatchedRight: [],
             pairs: [],
             ignoredIds: new Set(),
+            mergeSummary: null,
             loaded: false,
         }),
 }));

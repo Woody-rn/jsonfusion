@@ -4,9 +4,10 @@ import { useCallback, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { useNavigate } from "react-router-dom";
 import { uploadFiles } from "../api/files";
-import { createSession, deleteSession } from "../api/sessions";
+import { createSession, deleteSession, getSession } from "../api/sessions";
 import { useFieldsStore } from "../store/fieldsStore";
 import { useSessionStore } from "../store/sessionStore";
+import { useUnmatchedStore } from "../store/unmatchedStore";
 
 interface FileSlotProps {
     label: string;
@@ -58,6 +59,8 @@ export default function UploadPage() {
     const navigate = useNavigate();
     const { sessionId, setSessionId, clear } = useSessionStore();
     const setFileNames = useFieldsStore((s) => s.setFileNames);
+    const clearFields = useFieldsStore((s) => s.clear);
+    const clearUnmatched = useUnmatchedStore((s) => s.clear);
 
     const [file1, setFile1] = useState<File | null>(null);
     const [file2, setFile2] = useState<File | null>(null);
@@ -66,6 +69,27 @@ export default function UploadPage() {
 
     const canUpload = file1 !== null && file2 !== null && !loading;
 
+    const resetAll = () => {
+        clear();
+        clearFields();
+        clearUnmatched();
+    };
+
+    const ensureFreshSession = async (): Promise<string> => {
+        if (sessionId) {
+            try {
+                await getSession(sessionId);
+                return sessionId;
+            } catch {
+                // session gone — reset
+                resetAll();
+            }
+        }
+        const session = await createSession();
+        setSessionId(session.sessionId);
+        return session.sessionId;
+    };
+
     const handleUpload = async () => {
         if (!file1 || !file2) return;
 
@@ -73,19 +97,14 @@ export default function UploadPage() {
         setError(null);
 
         try {
-            let currentSessionId = sessionId;
-            if (!currentSessionId) {
-                const session = await createSession();
-                currentSessionId = session.sessionId;
-                setSessionId(currentSessionId);
-            }
+            let currentSessionId = await ensureFreshSession();
 
             try {
                 await uploadFiles(currentSessionId, file1, file2);
             } catch (err) {
-                if (isAxiosError(err) && err.response?.status === 409) {
+                if (isAxiosError(err) && (err.response?.status === 409 || err.response?.status === 404)) {
                     await deleteSession(currentSessionId).catch(() => undefined);
-                    clear();
+                    resetAll();
                     const fresh = await createSession();
                     currentSessionId = fresh.sessionId;
                     setSessionId(currentSessionId);

@@ -93,6 +93,8 @@ export interface UnmatchedRecordDto {
 }
 
 export interface UnmatchedResponse {
+    sessionId: string;
+    status: SessionStatus;
     unmatchedLeft: UnmatchedRecordDto[];
     unmatchedRight: UnmatchedRecordDto[];
 }
@@ -121,4 +123,8 @@ export interface FinalizeResponse {
     status: SessionStatus;
     resultSummary: ResultSummary;
     unmatchedResultAvailable: boolean;
+}
+
+export interface FinalizeRequest {
+    saveUnmatched: boolean;
 }

@@ -44,7 +44,7 @@ public class UnmatchedController {
     public UnmatchedResponse get(@PathVariable String id) {
         MergeSession session = findSession(id);
         MergeResult result = unmatchedService.getResult(session);
-        return toResponse(result, unmatchedService.getDecision(session));
+        return toResponse(session, result, unmatchedService.getDecision(session));
     }
 
     @PutMapping("/{id}/unmatched/decisions")
@@ -52,10 +52,12 @@ public class UnmatchedController {
                                     @Valid @RequestBody UpdateUnmatchedRequest request) {
         MergeSession session = findSession(id);
         UnmatchedDecision saved = unmatchedService.saveDecision(session, request.toDomain());
-        return toResponse(session.getResult(), saved);
+        return toResponse(session, session.getResult(), saved);
     }
 
-    private UnmatchedResponse toResponse(MergeResult result, UnmatchedDecision decision) {
+    private UnmatchedResponse toResponse(MergeSession session,
+                                         MergeResult result,
+                                         UnmatchedDecision decision) {
         Map<String, UnmatchedPair> leftPairs = pairsByLeft(decision);
         Map<String, UnmatchedPair> rightPairs = pairsByRight(decision);
         Set<String> ignored = decision != null ? decision.ignoredIds() : Set.of();
@@ -67,10 +69,12 @@ public class UnmatchedController {
                 .map(r -> toDto(r, rightPairs.get(r.id()), ignored))
                 .toList();
 
-        return new UnmatchedResponse(left, right);
+        return UnmatchedResponse.of(session, left, right);
     }
 
-    private UnmatchedRecordDto toDto(UnmatchedRecord record, UnmatchedPair pair, Set<String> ignored) {
+    private UnmatchedRecordDto toDto(UnmatchedRecord record,
+                                     UnmatchedPair pair,
+                                     Set<String> ignored) {
         String label = pair != null ? pair.label() : null;
         boolean isIgnored = ignored.contains(record.id());
         return UnmatchedRecordDto.from(record, label, isIgnored);

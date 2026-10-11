@@ -9,10 +9,12 @@ import FieldsTable from "../components/fields/FieldsTable";
 import NewFieldsPanel from "../components/fields/NewFieldsPanel";
 import { useFieldsStore } from "../store/fieldsStore";
 import { useSessionStore } from "../store/sessionStore";
+import { useUnmatchedStore } from "../store/unmatchedStore";
 
 export default function FieldsConfigPage() {
     const navigate = useNavigate();
     const sessionId = useSessionStore((s) => s.sessionId);
+    const setMergeSummary = useUnmatchedStore((s) => s.setMergeSummary);
 
     const {
         fields,
@@ -63,9 +65,12 @@ export default function FieldsConfigPage() {
                 newFields,
             };
 
-            const response = await updateConfig(sessionId, request);
-            setData(response.fields, response.anchorSettings, response.newFields);
-            await runMerge(sessionId);
+            const configResponse = await updateConfig(sessionId, request);
+            setData(configResponse.fields, configResponse.anchorSettings, configResponse.newFields);
+
+            const mergeResponse = await runMerge(sessionId);
+            setMergeSummary(mergeResponse.summary);
+
             navigate("/unmatched");
         } catch (e) {
             setError(e instanceof Error ? e.message : "Save failed");
