@@ -1,9 +1,11 @@
 import { Box, Button, Flex, Heading, Text, VStack } from "@chakra-ui/react";
+import { isAxiosError } from "axios";
 import { useCallback, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { useNavigate } from "react-router-dom";
 import { uploadFiles } from "../api/files";
-import { createSession } from "../api/sessions";
+import { createSession, deleteSession } from "../api/sessions";
+import { useFieldsStore } from "../store/fieldsStore";
 import { useSessionStore } from "../store/sessionStore";
 
 interface FileSlotProps {
@@ -54,7 +56,8 @@ function FileSlot({ label, file, onFile }: FileSlotProps) {
 
 export default function UploadPage() {
     const navigate = useNavigate();
-    const { sessionId, setSessionId } = useSessionStore();
+    const { sessionId, setSessionId, clear } = useSessionStore();
+    const setFileNames = useFieldsStore((s) => s.setFileNames);
 
     const [file1, setFile1] = useState<File | null>(null);
     const [file2, setFile2] = useState<File | null>(null);
@@ -77,7 +80,22 @@ export default function UploadPage() {
                 setSessionId(currentSessionId);
             }
 
-            await uploadFiles(currentSessionId, file1, file2);
+            try {
+                await uploadFiles(currentSessionId, file1, file2);
+            } catch (err) {
+                if (isAxiosError(err) && err.response?.status === 409) {
+                    await deleteSession(currentSessionId).catch(() => undefined);
+                    clear();
+                    const fresh = await createSession();
+                    currentSessionId = fresh.sessionId;
+                    setSessionId(currentSessionId);
+                    await uploadFiles(currentSessionId, file1, file2);
+                } else {
+                    throw err;
+                }
+            }
+
+            setFileNames(file1.name, file2.name);
             navigate("/fields");
         } catch (e) {
             setError(e instanceof Error ? e.message : "Upload failed");

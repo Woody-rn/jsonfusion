@@ -8,3 +8,10 @@ spring:
 
 server:
   port: 8089
+
+logging:
+  level:
+    root: INFO
+    ru.npepub.jsonfusion: DEBUG
+    org.springframework.web: DEBUG
+    org.springframework.web.servlet.DispatcherServlet: DEBUG

@@ -10,7 +10,7 @@ interface SessionStore {
 }
 
 export const useSessionStore = create<SessionStore>((set) => ({
-    sessionId: null,
+    sessionId: sessionStorage.getItem("sessionId"),
     status: null,
     setSessionId: (id) => {
         sessionStorage.setItem("sessionId", id);
