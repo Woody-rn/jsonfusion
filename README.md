@@ -1,9 +1,32 @@
 # jsonfusion
 
-Интерактивный инструмент для мержа двух JSON-файлов в третий.
+Интерактивный веб-инструмент для мержа двух JSON-файлов с автоматическим сопоставлением полей.
 
-Пользователь настраивает правила через web-интерфейс, видит несовпавшие записи,
-правит вручную, получает результат.
+🔗 **Live demo:** https://jsonfusion.npepub.ru
+
+## Что делает
+
+- Загружаешь 2 JSON-файла (массивы объектов).
+- Система анализирует поля и предлагает дефолтный конфиг.
+- Настраиваешь роли полей, якорь, условия переноса.
+- Запускаешь merge, видишь несовпавшие записи.
+- Вручную спариваешь / игнорируешь.
+- Скачиваешь результат.
+
+## Стек
+
+**Backend:** Java 21, Spring Boot 3.4, Gradle (Groovy), Caffeine, Jackson
+**Frontend:** React 19, TypeScript, Vite, Chakra UI, Zustand
+**Tests:** JUnit 5, Mockito, AssertJ, Vitest, React Testing Library
+**DevOps:** Docker, Docker Compose, GitHub Actions, GHCR, Nginx
+
+## Архитектура
+
+- Чистая архитектура (Ports & Adapters).
+- Domain не знает про Spring/HTTP.
+- SOLID, Dependency Inversion.
+- In-memory сессии (Caffeine).
+- Подробнее — [docs/architecture.md](docs/architecture.md).
 
 ## Документация
 
@@ -12,14 +35,11 @@
 - [Домен](docs/domain.md)
 - [API](docs/api.md)
 - [Roadmap](docs/roadmap.md)
-- [ADR](docs/adr/) — записи об архитектурных решениях
+- [ADR](docs/adr/) 
 
-## Стек
+## Запуск локально
 
-- **Backend:** Java 21, Spring Boot 3.4, Gradle (Groovy DSL)
-- **Frontend:** React, TypeScript, Vite, Chakra UI, Zustand
-- **Сессии:** Caffeine (in-memory)
-
-## Статус
-
-В разработке.
+```bash
+git clone https://github.com/Woody-rn/jsonfusion.git
+cd jsonfusion
+docker compose up --build
