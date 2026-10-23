@@ -8,6 +8,7 @@ import { createSession, deleteSession, getSession } from "../api/sessions";
 import { useFieldsStore } from "../store/fieldsStore";
 import { useSessionStore } from "../store/sessionStore";
 import { useUnmatchedStore } from "../store/unmatchedStore";
+import WelcomeBlock from "../components/upload/WelcomeBlock";
 
 interface FileSlotProps {
     label: string;
@@ -125,6 +126,7 @@ export default function UploadPage() {
 
     return (
         <VStack align="stretch" gap="6">
+            <WelcomeBlock />
             <Heading size="md">Upload two JSON files</Heading>
 
             <Flex gap="4" direction={{ base: "column", md: "row" }}>
