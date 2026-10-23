@@ -1,13 +1,13 @@
-import { Box, Button, Flex, Grid, Heading, Spinner, Text, VStack } from "@chakra-ui/react";
-import { useEffect, useMemo, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { getUnmatched, updateUnmatchedDecisions } from "../api/merge";
-import type { UpdateUnmatchedRequest } from "../api/types";
+import {Box, Button, Flex, Grid, Heading, Spinner, Text, VStack} from "@chakra-ui/react";
+import {useEffect, useMemo, useState} from "react";
+import {useNavigate} from "react-router-dom";
+import {getUnmatched, updateUnmatchedDecisions} from "../api/merge";
+import type {UpdateUnmatchedRequest} from "../api/types";
 import UnmatchedList from "../components/unmatched/UnmatchedList";
 import UnmatchedToolbar from "../components/unmatched/UnmatchedToolbar";
-import { useFieldsStore } from "../store/fieldsStore";
-import { useSessionStore } from "../store/sessionStore";
-import { useUnmatchedStore } from "../store/unmatchedStore";
+import {useFieldsStore} from "../store/fieldsStore";
+import {useSessionStore} from "../store/sessionStore";
+import {useUnmatchedStore} from "../store/unmatchedStore";
 
 export default function UnmatchedPage() {
     const navigate = useNavigate();
@@ -107,7 +107,7 @@ export default function UnmatchedPage() {
 
         try {
             const request: UpdateUnmatchedRequest = {
-                pairs: pairs.map((p) => ({ leftId: p.leftId, rightId: p.rightId, label: p.label })),
+                pairs: pairs.map((p) => ({leftId: p.leftId, rightId: p.rightId, label: p.label})),
                 ignoredIds: Array.from(ignoredIds),
             };
 
@@ -128,7 +128,7 @@ export default function UnmatchedPage() {
     if (loading) {
         return (
             <Flex justify="center" py="16">
-                <Spinner size="lg" />
+                <Spinner size="lg"/>
             </Flex>
         );
     }
@@ -136,6 +136,11 @@ export default function UnmatchedPage() {
     return (
         <VStack align="stretch" gap="4">
             <Heading size="md">Unmatched records</Heading>
+
+            <Text fontSize="sm" color="gray.600" mb="4">
+                Эти записи не нашли пару. Введите <b>одинаковый номер</b> слева и справа,
+                чтобы объединить их вручную. Или нажмите <b>✕</b>, чтобы проигнорировать.
+            </Text>
 
             <UnmatchedToolbar
                 totalCount={totalCount}
@@ -147,7 +152,7 @@ export default function UnmatchedPage() {
                 onClearIgnores={clearIgnored}
             />
 
-            <Grid templateColumns={{ base: "1fr", md: "1fr 1fr" }} gap="4">
+            <Grid templateColumns={{base: "1fr", md: "1fr 1fr"}} gap="4">
                 <UnmatchedList
                     title="From file 1"
                     side="left"
@@ -202,7 +207,7 @@ function extractPairs(
         if (!l.label) return;
         const rightId = rightByLabel.get(l.label);
         if (rightId) {
-            pairs.push({ leftId: l.id, rightId, label: l.label });
+            pairs.push({leftId: l.id, rightId, label: l.label});
         }
     });
     return pairs;

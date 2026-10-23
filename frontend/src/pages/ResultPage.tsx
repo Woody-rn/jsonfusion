@@ -45,6 +45,11 @@ export default function ResultPage() {
         <VStack align="stretch" gap="6">
             <Heading size="md">Result</Heading>
 
+            <Text fontSize="sm" color="gray.600" mb="4">
+                Проверьте сводку и нажмите <b>Finalize</b>, чтобы собрать итоговый JSON.
+                Нерешённые записи сохранятся в отдельный файл (если отметить галочку).
+            </Text>
+
             <Box borderWidth="1px" borderRadius="md" p="4" bg="white">
                 <Text fontWeight="bold" mb="3">Summary</Text>
                 <Table.Root size="sm">

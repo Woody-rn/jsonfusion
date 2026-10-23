@@ -1,15 +1,15 @@
-import { Box, Button, Flex, Heading, Spinner, Text, VStack } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { getFields, updateConfig } from "../api/config";
-import { runMerge } from "../api/merge";
-import type { UpdateConfigRequest } from "../api/types";
+import {Box, Button, Flex, Heading, Spinner, Text, VStack} from "@chakra-ui/react";
+import {useEffect, useState} from "react";
+import {useNavigate} from "react-router-dom";
+import {getFields, updateConfig} from "../api/config";
+import {runMerge} from "../api/merge";
+import type {UpdateConfigRequest} from "../api/types";
 import AnchorSettingsPanel from "../components/fields/AnchorSettingsPanel";
 import FieldsTable from "../components/fields/FieldsTable";
 import NewFieldsPanel from "../components/fields/NewFieldsPanel";
-import { useFieldsStore } from "../store/fieldsStore";
-import { useSessionStore } from "../store/sessionStore";
-import { useUnmatchedStore } from "../store/unmatchedStore";
+import {useFieldsStore} from "../store/fieldsStore";
+import {useSessionStore} from "../store/sessionStore";
+import {useUnmatchedStore} from "../store/unmatchedStore";
 
 export default function FieldsConfigPage() {
     const navigate = useNavigate();
@@ -82,7 +82,7 @@ export default function FieldsConfigPage() {
     if (loading || !anchorSettings) {
         return (
             <Flex justify="center" py="16">
-                <Spinner size="lg" />
+                <Spinner size="lg"/>
             </Flex>
         );
     }
@@ -96,6 +96,10 @@ export default function FieldsConfigPage() {
                         {file1Name} ↔ {file2Name}
                     </Text>
                 )}
+                <Text fontSize="sm" color="gray.600" mt="3">
+                    Выберите <b>якорь</b> — поле, по которому система ищет совпадения.
+                    Для остальных полей укажите <b>роль</b>: откуда брать значение при мерже.
+                </Text>
             </Box>
 
             <AnchorSettingsPanel
@@ -108,11 +112,11 @@ export default function FieldsConfigPage() {
                 }}
             />
 
-            <FieldsTable fields={fields} onFieldChange={updateField} />
+            <FieldsTable fields={fields} onFieldChange={updateField}/>
 
             <NewFieldsPanel
                 newFields={newFields}
-                onChange={(nf) => useFieldsStore.setState({ newFields: nf })}
+                onChange={(nf) => useFieldsStore.setState({newFields: nf})}
             />
 
             {!anchorValid && (
