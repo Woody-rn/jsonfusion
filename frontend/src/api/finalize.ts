@@ -1,7 +1,6 @@
 import { http } from "./client";
+import { API_BASE_URL } from "./env";
 import type { FinalizeResponse } from "./types";
-
-const BASE_URL = import.meta.env.VITE_API_URL ?? "http://localhost:8089";
 
 export async function finalize(
     sessionId: string,
@@ -15,9 +14,9 @@ export async function finalize(
 }
 
 export function downloadResultUrl(sessionId: string): string {
-    return `${BASE_URL}/api/sessions/${sessionId}/result`;
+    return `${API_BASE_URL}/api/sessions/${sessionId}/result`;
 }
 
 export function downloadUnmatchedUrl(sessionId: string): string {
-    return `${BASE_URL}/api/sessions/${sessionId}/result/unmatched`;
+    return `${API_BASE_URL}/api/sessions/${sessionId}/result/unmatched`;
 }

@@ -1,6 +1,8 @@
 import { Box, Container, Flex, Heading, Steps } from "@chakra-ui/react";
 import type { ReactNode } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { useSessionStore } from "../../store/sessionStore";
+import StartOverButton from "./StartOverButton";
 
 const STEPS = [
     { path: "/upload", label: "Upload" },
@@ -16,8 +18,13 @@ interface WizardLayoutProps {
 export default function WizardLayout({ children }: WizardLayoutProps) {
     const location = useLocation();
     const navigate = useNavigate();
+    const sessionId = useSessionStore((s) => s.sessionId);
 
-    const currentStep = STEPS.findIndex((s) => location.pathname.startsWith(s.path));
+    const currentStep = STEPS.findIndex((s) =>
+        location.pathname.startsWith(s.path)
+    );
+
+    const isUpload = location.pathname.startsWith("/upload");
 
     return (
         <Box minH="100vh" bg="gray.50">
@@ -25,6 +32,7 @@ export default function WizardLayout({ children }: WizardLayoutProps) {
                 <Container maxW="6xl">
                     <Flex justify="space-between" align="center" mb="4">
                         <Heading size="lg">jsonfusion</Heading>
+                        {!isUpload && sessionId && <StartOverButton />}
                     </Flex>
 
                     <Steps.Root
