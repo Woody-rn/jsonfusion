@@ -1,13 +1,13 @@
-import {Box, Button, Flex, Grid, Heading, Spinner, Text, VStack} from "@chakra-ui/react";
-import {useEffect, useMemo, useState} from "react";
-import {useNavigate} from "react-router-dom";
-import {getUnmatched, updateUnmatchedDecisions} from "../api/merge";
-import type {UpdateUnmatchedRequest} from "../api/types";
+import { Box, Button, Flex, Grid, Heading, Spinner, Text, VStack } from "@chakra-ui/react";
+import { useEffect, useMemo, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { getUnmatched, updateUnmatchedDecisions } from "../api/merge";
+import type { UpdateUnmatchedRequest } from "../api/types";
 import UnmatchedList from "../components/unmatched/UnmatchedList";
 import UnmatchedToolbar from "../components/unmatched/UnmatchedToolbar";
-import {useFieldsStore} from "../store/fieldsStore";
-import {useSessionStore} from "../store/sessionStore";
-import {useUnmatchedStore} from "../store/unmatchedStore";
+import { useFieldsStore } from "../store/fieldsStore";
+import { useSessionStore } from "../store/sessionStore";
+import { useUnmatchedStore } from "../store/unmatchedStore";
 
 export default function UnmatchedPage() {
     const navigate = useNavigate();
@@ -24,7 +24,7 @@ export default function UnmatchedPage() {
         toggleIgnored,
         ignoreMany,
         clearIgnored,
-        pairRecords,
+        setLabel,
         unpairLeft,
         unpairRight,
     } = useUnmatchedStore();
@@ -76,28 +76,7 @@ export default function UnmatchedPage() {
             else unpairRight(id);
             return;
         }
-
-        if (side === "left") {
-            const partner = pairs.find((p) => p.label === trimmed && p.leftId !== id);
-            if (partner) {
-                pairRecords(id, partner.rightId, trimmed);
-            } else {
-                const existing = pairs.find((p) => p.leftId === id);
-                if (existing) {
-                    pairRecords(id, existing.rightId, trimmed);
-                }
-            }
-        } else {
-            const partner = pairs.find((p) => p.label === trimmed && p.rightId !== id);
-            if (partner) {
-                pairRecords(partner.leftId, id, trimmed);
-            } else {
-                const existing = pairs.find((p) => p.rightId === id);
-                if (existing) {
-                    pairRecords(existing.leftId, id, trimmed);
-                }
-            }
-        }
+        setLabel(id, trimmed, side);
     };
 
     const handleSave = async () => {
@@ -106,8 +85,15 @@ export default function UnmatchedPage() {
         setError(null);
 
         try {
+            // Отправляем только полные пары
+            const completePairs = pairs.filter((p) => p.leftId && p.rightId);
+
             const request: UpdateUnmatchedRequest = {
-                pairs: pairs.map((p) => ({leftId: p.leftId, rightId: p.rightId, label: p.label})),
+                pairs: completePairs.map((p) => ({
+                    leftId: p.leftId,
+                    rightId: p.rightId,
+                    label: p.label,
+                })),
                 ignoredIds: Array.from(ignoredIds),
             };
 
@@ -128,7 +114,7 @@ export default function UnmatchedPage() {
     if (loading) {
         return (
             <Flex justify="center" py="16">
-                <Spinner size="lg"/>
+                <Spinner size="lg" />
             </Flex>
         );
     }
@@ -137,22 +123,17 @@ export default function UnmatchedPage() {
         <VStack align="stretch" gap="4">
             <Heading size="md">Unmatched records</Heading>
 
-            <Text fontSize="sm" color="gray.600" mb="4">
-                Эти записи не нашли пару. Введите <b>одинаковый номер</b> слева и справа,
-                чтобы объединить их вручную. Или нажмите <b>✕</b>, чтобы проигнорировать.
-            </Text>
-
             <UnmatchedToolbar
                 totalCount={totalCount}
                 ignoredCount={ignoredIds.size}
-                pairsCount={pairs.length}
+                pairsCount={pairs.filter((p) => p.leftId && p.rightId).length}
                 onlyDuplicates={onlyDuplicates}
                 onOnlyDuplicatesChange={setOnlyDuplicates}
                 onIgnoreAllVisible={handleIgnoreVisible}
                 onClearIgnores={clearIgnored}
             />
 
-            <Grid templateColumns={{base: "1fr", md: "1fr 1fr"}} gap="4">
+            <Grid templateColumns={{ base: "1fr", md: "1fr 1fr" }} gap="4">
                 <UnmatchedList
                     title="From file 1"
                     side="left"
@@ -207,7 +188,7 @@ function extractPairs(
         if (!l.label) return;
         const rightId = rightByLabel.get(l.label);
         if (rightId) {
-            pairs.push({leftId: l.id, rightId, label: l.label});
+            pairs.push({ leftId: l.id, rightId, label: l.label });
         }
     });
     return pairs;

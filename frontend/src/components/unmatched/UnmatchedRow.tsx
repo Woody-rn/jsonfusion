@@ -1,4 +1,5 @@
 import { Box, Flex, IconButton, Input, Text } from "@chakra-ui/react";
+import { useState } from "react";
 import type { UnmatchedRecordDto } from "../../api/types";
 
 interface UnmatchedRowProps {
@@ -24,6 +25,8 @@ export default function UnmatchedRow({
                                          onLabelChange,
                                          onToggleIgnored,
                                      }: UnmatchedRowProps) {
+    const [localLabel, setLocalLabel] = useState(label ?? "");
+
     const anchorValue = record.record[anchorField];
     const displayValue = anchorValue == null ? "(no value)" : String(anchorValue);
 
@@ -36,7 +39,7 @@ export default function UnmatchedRow({
             opacity={ignored ? 0.4 : 1}
             bg={record.type === "DUPLICATE" ? "yellow.50" : "white"}
         >
-            <Text fontSize="xs" color="gray.500" width="32px">
+            <Text fontSize="xs" color="gray.500" width="32px" flexShrink={0}>
                 {record.id}
             </Text>
 
@@ -51,12 +54,18 @@ export default function UnmatchedRow({
 
             <Input
                 size="xs"
-                width="50px"
+                w="50px"
+                minW="50px"
+                flexShrink={0}
                 textAlign="center"
                 placeholder="—"
-                value={label ?? ""}
-                onChange={(e) => onLabelChange(e.target.value)}
+                value={localLabel}
+                onChange={(e) => {
+                    setLocalLabel(e.target.value);
+                    onLabelChange(e.target.value);
+                }}
                 disabled={ignored}
+                bg="white"
             />
 
             <IconButton
@@ -65,6 +74,7 @@ export default function UnmatchedRow({
                 variant={ignored ? "solid" : "ghost"}
                 colorPalette={ignored ? "red" : "gray"}
                 onClick={onToggleIgnored}
+                flexShrink={0}
             >
                 ✕
             </IconButton>
